@@ -1,0 +1,7 @@
+{
+  "include": ["src"],
+  "stubPath": "./typings",
+  "typeCheckingMode": "standard",
+  "venvPath": ".",
+  "venv": ".venv"
+}
