@@ -1,161 +1,162 @@
 {
-    "type": "json_schema",
-    "json_schema": {
-        "name": "cv_data",
-        "schema": {
-  "type": "object",
-  "properties": {
-    "voornaam": {
-      "type": "string"
-    },
-    "achternaam": {
-      "type": "string"
-    },
-    "telefoonnummer": {
-      "type": "string"
-    },
-    "functie_titel": {
-      "type": "string"
-    },
-    "woonplaats": {
-      "type": "string"
-    },
-    "email": {
-      "type": "string"
-    },
-    "samenvatting": {
-      "type": "string"
-    },
-    "werkervaring": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "bedrijf": {
-            "type": "string"
-          },
-          "rol": {
-            "type": "string"
-          },
-          "periode": {
-            "type": "string"
-          },
-          "beschrijving": {
-            "type": "string"
-          },
-          "skills": {
-            "type": "array",
-            "items": {
-              "type": "string"
+  "type": "json_schema",
+  "json_schema": {
+    "name": "cv_data",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "voornaam": {
+          "type": "string"
+        },
+        "achternaam": {
+          "type": "string"
+        },
+        "telefoonnummer": {
+          "type": "string"
+        },
+        "functie_titel": {
+          "type": "string"
+        },
+        "woonplaats": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "samenvatting": {
+          "type": "string"
+        },
+        "werkervaring": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "bedrijf": {
+                "type": "string"
+              },
+              "rol": {
+                "type": "string"
+              },
+              "periode": {
+                "type": "string"
+              },
+              "beschrijving": {
+                "type": "string"
+              },
+              "skills": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "scopes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "resultaten": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
             }
-          },
-          "scopes": {
-            "type": "array",
-            "items": {
-              "type": "string"
+          }
+        },
+        "opleiding": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "naam": {
+                "type": "string"
+              },
+              "instelling": {
+                "type": "string"
+              },
+              "periode": {
+                "type": "string"
+              }
             }
-          },
-          "resultaten": {
-            "type": "array",
-            "items": {
-              "type": "string"
+          }
+        },
+        "cursussen": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "naam": {
+                "type": "string"
+              },
+              "instelling": {
+                "type": "string"
+              },
+              "periode": {
+                "type": "string"
+              }
             }
           }
-        }
-      }
-    },
-    "opleiding": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "naam": {
+        },
+        "niet_it_ervaring": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "bedrijf": {
+                "type": "string"
+              },
+              "functie": {
+                "type": "string"
+              },
+              "periode": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "architectuur_en_domeinen_expertise": {
+          "type": "array",
+          "items": {
             "type": "string"
-          },
-          "instelling": {
+          }
+        },
+        "development_en_framework_expertise": {
+          "type": "array",
+          "items": {
             "type": "string"
-          },
-          "periode": {
+          }
+        },
+        "cloud_en_integratieplatformen_expertise": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "delivery_devops_en_methodiek_expertise": {
+          "type": "array",
+          "items": {
             "type": "string"
           }
         }
-      }
-    },
-    "cursussen": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "naam": {
-            "type": "string"
-          },
-          "instelling": {
-            "type": "string"
-          },
-          "periode": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "niet_it_ervaring": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "bedrijf": {
-            "type": "string"
-          },
-          "functie": {
-            "type": "string"
-          },
-          "periode": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "architectuur_en_domeinen_expertise": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "development_en_framework_expertise": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "cloud_en_integratieplatformen_expertise": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "delivery_devops_en_methodiek_expertise": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
+      },
+      "required": [
+        "voornaam",
+        "achternaam",
+        "telefoonnummer",
+        "functie_titel",
+        "woonplaats",
+        "email",
+        "samenvatting",
+        "werkervaring",
+        "opleiding",
+        "cursussen",
+        "niet_it_ervaring",
+        "architectuur_en_domeinen_expertise",
+        "development_en_framework_expertise",
+        "cloud_en_integratieplatformen_expertise",
+        "delivery_devops_en_methodiek_expertise"
+      ]
     }
-  },
-  "required": [
-    "voornaam",
-    "achternaam",
-    "telefoonnummer",
-    "functie_titel",
-    "woonplaats",
-    "email",
-    "samenvatting",
-    "werkervaring",
-    "opleiding",
-    "cursussen",
-    "niet_it_ervaring",
-    "architectuur_en_domeinen_expertise",
-    "development_en_framework_expertise",
-    "cloud_en_integratieplatformen_expertise",
-    "delivery_devops_en_methodiek_expertise"
-  ]
+  }
 }
-}}
