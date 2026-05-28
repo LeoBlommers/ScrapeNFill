@@ -7,7 +7,7 @@ import yaml
 ENV_PATTERN = re.compile(r"\$\{([^}:]+)(?::([^}]+))?\}")
 
 
-def replace_env_vars(value):
+def replace_env_vars(value) -> str:
     if isinstance(value, str):
         match = ENV_PATTERN.fullmatch(value)
 
@@ -20,7 +20,7 @@ def replace_env_vars(value):
     return value
 
 
-def process_dict(data):
+def process_dict(data) -> list | dict | str:
     if isinstance(data, dict):
         return {key: process_dict(value) for key, value in data.items()}
 
@@ -30,7 +30,7 @@ def process_dict(data):
     return replace_env_vars(data)
 
 
-def read_config(path: Path) -> dict:
+def read_config(path: Path) -> list | dict | str:
     with open(path) as f:
         config = yaml.safe_load(f)
 

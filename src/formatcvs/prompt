@@ -1,0 +1,10 @@
+Je krijgt een CV in vrije tekst.
+
+Extraheer dit naar JSON
+
+Regels:
+- Geen info verzinnen
+- Skills normaliseren (JS → JavaScript)
+- beschrijvingen letterlijk overnemen. Let op dat de beschrijving uit meerdere regels kan bestaan.
+- gebruik voor email voornaam.achternaam@devtalents.nl. Vervang spaties in de naam door .
+- Output ALLEEN geldige JSON

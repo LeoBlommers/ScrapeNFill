@@ -1,0 +1,5 @@
+input_dir: <fill in input dir>
+output_dir: <fill in output dir>
+cv_template: <fill in template>
+model: gpt-5.4-mini
+api_key: <fill in api key>

@@ -1,4 +1,4 @@
-FROM engineervix/pyinstaller-windows:python3
+FROM mcr.microsoft.com/windows/nanoserver:ltsc2025
 
 # uv installeren
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
