@@ -1,6 +1,9 @@
 import json
 
-import docx as docx_reader
+from typing import cast
+from docx import Document
+from docx.document import Document as DocumentType
+
 import pdfplumber
 from docxtpl import DocxTemplate
 from openai import OpenAI
@@ -32,7 +35,7 @@ class Cv:
                 yield Table(child, parent)
 
     def extract_text_from_docx(self, path):
-        doc = docx_reader.Document(path)
+        doc: DocumentType = cast(DocumentType, Document(path.as_posix()))
         text = list()
         for block in self.iter_block_items(doc):
             if hasattr(block, "text"):
@@ -58,6 +61,8 @@ class Cv:
     # STEP 1: CV → JSON
     # =========================
     def cv_to_json(self, cv_text):
+        with open("model") as file:
+            model = json.load(file)
         with open("prompt") as file:
             prompt = file.read()
 
@@ -74,10 +79,11 @@ class Cv:
             model=self.config["model"],
             messages=[{"role": "user", "content": prompt}],
             temperature=0.2,
+            response_format=model
         )
 
-        content = resp.choices[0].message.content
-        content = content.replace("```json", "").replace("```", "")
+        content: str = resp.choices[0].message.content
+#        content = content.replace("```json", "").replace("```", "")
         return json.loads(content)
         try:
             return json.loads(content)

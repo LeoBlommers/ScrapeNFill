@@ -7,6 +7,9 @@ uv run ruff check --fix .
 # Format your code
 uv run ruff format .
 
+# type check your code
+uv run pyright
+
 # Build executable
 Build local executable
 uv run pyinstaller \
