@@ -1,4 +1,5 @@
 import json
+from configparser import ConfigParser
 
 from typing import cast
 from docx import Document
@@ -10,7 +11,7 @@ from openai import OpenAI
 
 
 class Cv:
-    def __init__(self, config: dict):
+    def __init__(self, config: ConfigParser):
         self.config = config
         self.client = OpenAI(api_key=config["CHATGPT"]["api_key"])
 

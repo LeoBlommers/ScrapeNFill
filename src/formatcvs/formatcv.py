@@ -1,4 +1,4 @@
-import configparser
+from configparser import ConfigParser
 import threading
 import tkinter as tk
 from pathlib import Path
@@ -9,7 +9,7 @@ from formatcvs.cv import Cv
 
 class App:
     def __init__(self, root):
-        config = configparser.ConfigParser()
+        config: ConfigParser = ConfigParser()
         config.read("config.ini")
         self.config = config
         self.cv = Cv(config)
