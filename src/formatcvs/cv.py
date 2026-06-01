@@ -1,11 +1,13 @@
 import json
 from configparser import ConfigParser
 
-from typing import cast
+from typing import cast, Iterator
 from docx import Document
 from docx.document import Document as DocumentType
 
 import pdfplumber
+from docx.table import Table
+from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate
 from openai import OpenAI
 
@@ -25,7 +27,7 @@ class Cv:
                 text += page.extract_text() or ""
         return text
 
-    def iter_block_items(self, parent):
+    def iter_block_items(self, parent) -> Iterator[Paragraph | Table]:
         from docx.table import Table
         from docx.text.paragraph import Paragraph
 
@@ -36,12 +38,13 @@ class Cv:
                 yield Table(child, parent)
 
     def extract_text_from_docx(self, path):
-        doc: DocumentType = cast(DocumentType, Document(path.as_posix()))
-        text = list()
+        doc = cast(DocumentType, Document(str(path)))  # pyright: ignore[reportCallIssue]
+        text: list[str] = []
+
         for block in self.iter_block_items(doc):
-            if hasattr(block, "text"):
+            if isinstance(block, Paragraph):
                 text.append(block.text)
-            else:
+            elif isinstance(block, Table):
                 # tabel
                 for row in block.rows:
                     for cell in row.cells:
