@@ -12,7 +12,7 @@ from openai import OpenAI
 class Cv:
     def __init__(self, config: dict):
         self.config = config
-        self.client = OpenAI(api_key=config["api_key"])
+        self.client = OpenAI(api_key=config["CHATGPT"]["api_key"])
 
     # =========================
     # TEXT EXTRACTION
@@ -67,30 +67,25 @@ class Cv:
             prompt = file.read()
 
         prompt = f"""
-    {prompt}
-    
-    CV:
-    \"\"\"
-    {cv_text}
-    \"\"\"
-    """
+            {prompt}
+            
+            CV:
+            \"\"\"
+            {cv_text}
+            \"\"\"
+            """
 
         resp = self.client.chat.completions.create(
-            model=self.config["model"],
+            model=self.config["CHATGPT"]["model"],
             messages=[{"role": "user", "content": prompt}],
             temperature=0.2,
             response_format=model
         )
-
+        if not resp.choices or not resp.choices[0].message.content:
+            raise Exception("No response from OpenAI")
         content: str = resp.choices[0].message.content
-#        content = content.replace("```json", "").replace("```", "")
         return json.loads(content)
-        try:
-            return json.loads(content)
-        except Exception:
-            print("⚠️ JSON parse error:")
-            print(content)
-            return None
+
 
     # =========================
     # OUTPUT
