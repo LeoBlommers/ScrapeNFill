@@ -1,0 +1,27 @@
+import argparse
+import tkinter as tk
+from configparser import ConfigParser
+
+from scapenfill.desktop.main import App
+
+
+def scrap_n_fill():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--mode", choices=["desktop", "cli"], default="desktop")
+    parser.add_argument("--input", type=str)
+    parser.add_argument("--output", type=str)
+    parser.add_argument("--template", type=str)
+
+
+    args = parser.parse_args()
+
+    config: ConfigParser = ConfigParser()
+    config.read("config.ini")
+
+    if args.mode == "desktop":
+        from desktop.main import run
+
+    run(config, args)
+
+if __name__ == "__main__":
+    scrap_n_fill()

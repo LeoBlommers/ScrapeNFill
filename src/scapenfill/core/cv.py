@@ -65,16 +65,16 @@ class Cv:
     # STEP 1: CV → JSON
     # =========================
     def cv_to_json(self, cv_text):
-        with open("model") as file:
+        with open("core/model") as file:
             model = json.load(file)
-        with open("prompt") as file:
+        with open("core/prompt") as file:
             prompt = file.read()
 
         prompt = f"""
             {prompt}
             
             CV:
-            \"\"\"
+ƒ            \"\"\"
             {cv_text}
             \"\"\"
             """

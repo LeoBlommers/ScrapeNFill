@@ -15,4 +15,4 @@ RUN uv sync
 COPY . .
 
 # build
-RUN uv run pyinstaller --onefile src/formatcvs/formatcv.py
+RUN uv run pyinstaller --onefile src/scapenfill/main.py
