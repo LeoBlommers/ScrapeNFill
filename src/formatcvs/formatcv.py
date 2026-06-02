@@ -1,15 +1,16 @@
+from configparser import ConfigParser
 import threading
 import tkinter as tk
 from pathlib import Path
 from tkinter import filedialog, scrolledtext, ttk
 
-from formatcvs.config import read_config, write_config
 from formatcvs.cv import Cv
 
 
 class App:
     def __init__(self, root):
-        config = read_config(Path("config.yaml"))
+        config: ConfigParser = ConfigParser()
+        config.read("config.ini")
         self.config = config
         self.cv = Cv(config)
 
@@ -20,8 +21,8 @@ class App:
         root.protocol("WM_DELETE_WINDOW", self.on_closing)
 
         # Variables
-        self.input_dir = tk.StringVar(value=config.get("input_dir"))
-        self.output_dir = tk.StringVar(value=config.get("output_dir"))
+        self.input_dir = tk.StringVar(value=config["DIRECTORIES"]["input"])
+        self.output_dir = tk.StringVar(value=config["DIRECTORIES"]["output"])
 
         # ===== Input directory =====
         input_frame = ttk.Frame(root, padding=10)
@@ -72,9 +73,10 @@ class App:
         self.log_console.pack(fill="both", expand=True)
 
     def on_closing(self):
-        self.config["input_dir"] = self.input_dir.get()
-        self.config["output_dir"] = self.output_dir.get()
-        write_config(Path("config.yaml"), self.config)
+        self.config["DIRECTORIES"]["input"] = self.input_dir.get()
+        self.config["DIRECTORIES"]["output"] = self.output_dir.get()
+        with open('config.ini', 'w') as configfile:
+            self.config.write(configfile)
         self.root.destroy()
 
     def select_input_dir(self):
@@ -96,7 +98,7 @@ class App:
     def start_process(self):
         input_dir = self.input_dir.get()
         output_dir = self.output_dir.get()
-        template = self.config.get("cv_template")
+        template = self.config["TEMPLATE"]["template"]
 
         if not input_dir or not output_dir:
             self.log("ERROR: Selecteer input en output directory")
