@@ -20,6 +20,8 @@ def scrap_n_fill():
 
     if args.mode == "desktop":
         from desktop.main import run
+    if args.mode == "cli":
+        from cli.main import run
 
     run(config, args)
 
