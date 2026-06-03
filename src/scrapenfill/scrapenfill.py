@@ -2,7 +2,7 @@ import argparse
 import tkinter as tk
 from configparser import ConfigParser
 
-from scapenfill.desktop.main import App
+from scrapenfill.desktop.main import App
 
 
 def scrap_n_fill():
