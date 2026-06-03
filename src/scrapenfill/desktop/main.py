@@ -1,16 +1,14 @@
-from configparser import ConfigParser
 import threading
 import tkinter as tk
 from pathlib import Path
 from tkinter import filedialog, scrolledtext, ttk
 
-from formatcvs.cv import Cv
+from core.cv import Cv
 
 
 class App:
-    def __init__(self, root):
-        config: ConfigParser = ConfigParser()
-        config.read("config.ini")
+    def __init__(self, root, config):
+
         self.config = config
         self.cv = Cv(config)
 
@@ -75,7 +73,7 @@ class App:
     def on_closing(self):
         self.config["DIRECTORIES"]["input"] = self.input_dir.get()
         self.config["DIRECTORIES"]["output"] = self.output_dir.get()
-        with open('config.ini', 'w') as configfile:
+        with open('../config.ini', 'w') as configfile:
             self.config.write(configfile)
         self.root.destroy()
 
@@ -144,7 +142,14 @@ class App:
             self.start_button.config(state="normal")
 
 
-if __name__ == "__main__":
+def run(config, args):
+
     root = tk.Tk()
-    app = App(root)
+    app = App(root, config)
+    if args.input:
+        app.input_dir.set(args.input)
+    if args.output:
+        app.output_dir.set(args.output)
+    if args.template:
+        app.template_file.set(args.template)
     root.mainloop()

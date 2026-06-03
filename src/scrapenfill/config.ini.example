@@ -1,0 +1,10 @@
+[DIRECTORIES]
+input = <add input directory here>
+output = <add output directory here>
+
+[TEMPLATE]
+template = <add path to template here>
+
+[CHATGPT]
+model = gpt-5.4-mini
+api_key = <add chatgpt api key here>
