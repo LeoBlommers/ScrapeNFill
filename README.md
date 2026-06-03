@@ -1,3 +1,5 @@
+![CI](https://github.com/LeoBlommers/ScrapeNFill/actions/workflows/ci.yml/badge.svg)
+
 # Lint your code
 uv run ruff check .
 
