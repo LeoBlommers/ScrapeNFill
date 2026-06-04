@@ -19,7 +19,7 @@ def scrap_n_fill():
     elif args.mode == "cli":
         from cli.main import run
     else:
-      raise Exception("Invalid mode")
+        raise Exception("Invalid mode")
 
     run(config, args)
 
