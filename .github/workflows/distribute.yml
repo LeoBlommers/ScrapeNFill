@@ -32,7 +32,7 @@ jobs:
       - name: Build package
         run: uv build
 
-      - name: Pytest
+      - name: Create executable
         run: uv run pyinstaller -onefile src/scrapenfill/scrapenfill.py
 
       - name: Create Release
