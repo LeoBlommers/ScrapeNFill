@@ -1,11 +1,16 @@
 name: Distribute
 
 on:
-  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
 
 jobs:
-  test:
+  build:
     runs-on: windows-latest
+
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -27,11 +32,10 @@ jobs:
       - name: Build package
         run: uv build
 
-      - name: Pytest
+      - name: Create executable
         run: uv run pyinstaller -onefile src/scrapenfill/scrapenfill.py
 
-      - name: Upload exe
-        uses: actions/upload-artifact@v4
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: scrapeNFill
-          path: dist/*.exe
+          files: dist/*.exe
