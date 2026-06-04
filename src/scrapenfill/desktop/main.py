@@ -150,6 +150,6 @@ def run(config, args):
         app.input_dir.set(args.input)
     if args.output:
         app.output_dir.set(args.output)
-    if args.template:
-        app.template_file.set(args.template)
+#    if args.template:
+#        app.template_file.set(args.template)
     root.mainloop()

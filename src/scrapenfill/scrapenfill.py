@@ -16,8 +16,10 @@ def scrap_n_fill():
 
     if args.mode == "desktop":
         from desktop.main import run
-    if args.mode == "cli":
+    elif args.mode == "cli":
         from cli.main import run
+    else:
+      raise Exception("Invalid mode")
 
     run(config, args)
 
