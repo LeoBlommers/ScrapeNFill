@@ -1,11 +1,11 @@
 import json
+from collections.abc import Iterator
 from configparser import ConfigParser
-
-from typing import cast, Iterator
-from docx import Document
-from docx.document import Document as DocumentType
+from typing import cast
 
 import pdfplumber
+from docx import Document
+from docx.document import Document as DocumentType
 from docx.table import Table
 from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate
@@ -83,13 +83,12 @@ class Cv:
             model=self.config["CHATGPT"]["model"],
             messages=[{"role": "user", "content": prompt}],
             temperature=0.2,
-            response_format=model
+            response_format=model,
         )
         if not resp.choices or not resp.choices[0].message.content:
             raise Exception("No response from OpenAI")
         content: str = resp.choices[0].message.content
         return json.loads(content)
-
 
     # =========================
     # OUTPUT

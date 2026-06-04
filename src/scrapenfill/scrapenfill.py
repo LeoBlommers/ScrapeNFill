@@ -1,8 +1,5 @@
 import argparse
-import tkinter as tk
 from configparser import ConfigParser
-
-from scrapenfill.desktop.main import App
 
 
 def scrap_n_fill():
@@ -12,7 +9,6 @@ def scrap_n_fill():
     parser.add_argument("--output", type=str)
     parser.add_argument("--template", type=str)
 
-
     args = parser.parse_args()
 
     config: ConfigParser = ConfigParser()
@@ -20,10 +16,13 @@ def scrap_n_fill():
 
     if args.mode == "desktop":
         from desktop.main import run
-    if args.mode == "cli":
+    elif args.mode == "cli":
         from cli.main import run
+    else:
+        raise Exception("Invalid mode")
 
     run(config, args)
+
 
 if __name__ == "__main__":
     scrap_n_fill()

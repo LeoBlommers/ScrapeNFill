@@ -73,7 +73,7 @@ class App:
     def on_closing(self):
         self.config["DIRECTORIES"]["input"] = self.input_dir.get()
         self.config["DIRECTORIES"]["output"] = self.output_dir.get()
-        with open('../config.ini', 'w') as configfile:
+        with open("../config.ini", "w") as configfile:
             self.config.write(configfile)
         self.root.destroy()
 
@@ -150,6 +150,6 @@ def run(config, args):
         app.input_dir.set(args.input)
     if args.output:
         app.output_dir.set(args.output)
-    if args.template:
-        app.template_file.set(args.template)
+    #    if args.template:
+    #        app.template_file.set(args.template)
     root.mainloop()
