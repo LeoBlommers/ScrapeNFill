@@ -83,13 +83,12 @@ class Cv:
             model=self.config["CHATGPT"]["model"],
             messages=[{"role": "user", "content": prompt}],
             temperature=0.2,
-            response_format=model
+            response_format=model,
         )
         if not resp.choices or not resp.choices[0].message.content:
             raise Exception("No response from OpenAI")
         content: str = resp.choices[0].message.content
         return json.loads(content)
-
 
     # =========================
     # OUTPUT

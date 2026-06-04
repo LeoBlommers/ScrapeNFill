@@ -1,4 +1,3 @@
-
 from pathlib import Path
 
 from core.cv import Cv

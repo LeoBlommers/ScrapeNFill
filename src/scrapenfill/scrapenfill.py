@@ -9,7 +9,6 @@ def scrap_n_fill():
     parser.add_argument("--output", type=str)
     parser.add_argument("--template", type=str)
 
-
     args = parser.parse_args()
 
     config: ConfigParser = ConfigParser()
@@ -21,6 +20,7 @@ def scrap_n_fill():
         from cli.main import run
 
     run(config, args)
+
 
 if __name__ == "__main__":
     scrap_n_fill()
