@@ -1,8 +1,5 @@
 import argparse
-import tkinter as tk
 from configparser import ConfigParser
-
-from scrapenfill.desktop.main import App
 
 
 def scrap_n_fill():

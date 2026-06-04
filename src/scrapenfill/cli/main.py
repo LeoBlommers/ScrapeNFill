@@ -1,6 +1,7 @@
 
-from core.cv import Cv
 from pathlib import Path
+
+from core.cv import Cv
 
 
 def run_process(input_dir, output_dir, template, cv):

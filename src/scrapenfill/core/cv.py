@@ -1,11 +1,11 @@
 import json
+from collections.abc import Iterator
 from configparser import ConfigParser
-
-from typing import cast, Iterator
-from docx import Document
-from docx.document import Document as DocumentType
+from typing import cast
 
 import pdfplumber
+from docx import Document
+from docx.document import Document as DocumentType
 from docx.table import Table
 from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate
