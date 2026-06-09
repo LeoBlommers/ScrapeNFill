@@ -11,11 +11,12 @@ from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate
 from openai import OpenAI
 
+from core.OpenAIClient import OpenAIClient
+
 
 class Cv:
     def __init__(self, config: ConfigParser):
         self.config = config
-        self.client = OpenAI(api_key=config["CHATGPT"]["api_key"])
 
     # =========================
     # TEXT EXTRACTION
@@ -66,7 +67,7 @@ class Cv:
     # =========================
     def cv_to_json(self, cv_text):
         with open("core/model") as file:
-            model = json.load(file)
+            format = json.load(file)
         with open("core/prompt") as file:
             prompt = file.read()
 
@@ -79,16 +80,8 @@ class Cv:
             \"\"\"
             """
 
-        resp = self.client.chat.completions.create(
-            model=self.config["CHATGPT"]["model"],
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.2,
-            response_format=model,
-        )
-        if not resp.choices or not resp.choices[0].message.content:
-            raise Exception("No response from OpenAI")
-        content: str = resp.choices[0].message.content
-        return json.loads(content)
+        client = OpenAIClient(api_key=self.config["CHATGPT"]["api_key"], model=self.config["CHATGPT"]["model"])
+        return client.extract(prompt, format)
 
     # =========================
     # OUTPUT
