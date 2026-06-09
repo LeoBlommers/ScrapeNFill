@@ -15,4 +15,4 @@ RUN uv sync
 COPY . .
 
 # build
-RUN uv run pyinstaller --onefile src/scrapenfill/main.py
+RUN uv run pyinstaller --onefile src/scrapenfill/app.py
