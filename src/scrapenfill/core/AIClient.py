@@ -1,3 +1,3 @@
 class AIClient:
-    def extract(self, prompt: str, format: object) -> object:
+    def extract(self, prompt: str, format: dict) -> dict:
         raise NotImplementedError
