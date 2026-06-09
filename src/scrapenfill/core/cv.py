@@ -4,14 +4,12 @@ from configparser import ConfigParser
 from typing import cast
 
 import pdfplumber
+from core.OpenAIClient import OpenAIClient
 from docx import Document
 from docx.document import Document as DocumentType
 from docx.table import Table
 from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate
-from openai import OpenAI
-
-from core.OpenAIClient import OpenAIClient
 
 
 class Cv:
@@ -80,7 +78,9 @@ class Cv:
             \"\"\"
             """
 
-        client = OpenAIClient(api_key=self.config["CHATGPT"]["api_key"], model=self.config["CHATGPT"]["model"])
+        client = OpenAIClient(
+            api_key=self.config["CHATGPT"]["api_key"], model=self.config["CHATGPT"]["model"]
+        )
         return client.extract(prompt, format)
 
     # =========================
