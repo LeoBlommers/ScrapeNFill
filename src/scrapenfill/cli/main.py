@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Leo
+# Licensed under the ScrapeNFill Community License
+
 from pathlib import Path
 
 from core.cv import Cv

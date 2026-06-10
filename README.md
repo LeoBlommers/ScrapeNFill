@@ -1,5 +1,18 @@
 ![CI](https://github.com/LeoBlommers/ScrapeNFill/actions/workflows/ci.yml/badge.svg)
 
+## License
+
+ScrapeNFill is released under the ScrapeNFill Community License 1.0.
+
+✅ Personal use  
+✅ Educational use  
+✅ Research use  
+✅ Modification and redistribution  
+
+❌ Commercial use without permission
+
+For commercial licensing, contact: info@lbit.nl
+
 # Lint your code
 uv run ruff check .
 
