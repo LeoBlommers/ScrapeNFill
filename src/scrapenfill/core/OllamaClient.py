@@ -9,15 +9,15 @@ from core.AIClient import AIClient
 from ollama import chat
 
 
-class MistralClient(AIClient):
+class OllamaClient(AIClient):
     def __init__(self, config: ConfigParser):
-        self.model = config["MISTRAL"]["model"]
+        self.model = config["OLLAMA"]["model"]
 
     def extract(self, prompt: str, schema: dict[str, Any]) -> dict[str, Any]:
         response = chat(
-            model="qwen3:14b",
+            model=self.model,
             messages=[{"role": "user", "content": prompt}],
-            format=schema,
+            format=schema["json_schema"]["schema"],
         )
 
         if not response.message or not response.message.content:

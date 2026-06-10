@@ -8,6 +8,7 @@ from typing import cast
 
 import pdfplumber
 from core.MistralClient import MistralClient
+from core.OllamaClient import OllamaClient
 from core.OpenAIClient import OpenAIClient
 from docx import Document
 from docx.document import Document as DocumentType
@@ -85,6 +86,8 @@ class Cv:
             client = OpenAIClient(config=self.config)
         elif self.config["LLM"]["provider"] == "MISTRAL":
             client = MistralClient(config=self.config)
+        elif self.config["LLM"]["provider"] == "OLLAMA":
+            client = OllamaClient(config=self.config)
         else:
             raise Exception("Invalid LLM provider")
 
