@@ -21,17 +21,7 @@ class OpenAIClient(AIClient):
             model=self.model,
             messages=[{"role": "user", "content": prompt}],
             temperature=0.2,
-            response_format=cast(
-                ResponseFormatJSONSchema,
-                {
-                    "type": "json_schema",
-                    "json_schema": {
-                        "name": "result",
-                        "schema": schema,
-                        "strict": True,
-                    },
-                },
-            ),
+            response_format=cast(ResponseFormatJSONSchema, schema),
         )
 
         if not response.choices or not response.choices[0].message.content:

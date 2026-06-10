@@ -15,3 +15,7 @@ api_key = <add chatgpt api key here>
 [MISTRAL]
 model = gpt-5.4-mini
 api_key = <add mistral api key here>
+
+[OLLAMA]
+model = qwen3:32b
+url = <add mistral api key here>
