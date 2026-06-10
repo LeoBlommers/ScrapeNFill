@@ -18,21 +18,18 @@ class MistralClient(AIClient):
 
         response = self.client.chat.complete(
             model="mistral-large-latest",
-            messages=[
+            messages=[{"role": "user", "content": prompt}],
+            response_format=cast(
+                Any,
                 {
-                    "role": "user",
-                    "content": prompt
-                }
-            ],
-            response_format=cast(Any, {
-                "type": "json_schema",
-                "json_schema": {
-                    "name": "result",
-                    "schema": schema,
-                    "strict": True,
+                    "type": "json_schema",
+                    "json_schema": {
+                        "name": "result",
+                        "schema": schema,
+                        "strict": True,
+                    },
                 },
-            }
-                                 )
+            ),
         )
 
         if not response.choices[0].message or not response.choices[0].message.content:
@@ -40,5 +37,3 @@ class MistralClient(AIClient):
         assert isinstance(response.choices[0].message.content, str)
         content: str = response.choices[0].message.content
         return json.loads(content)
-
-
