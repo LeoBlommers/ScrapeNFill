@@ -4,6 +4,9 @@ from configparser import ConfigParser
 from typing import cast
 
 import pdfplumber
+from mistralai.workflows import config
+
+from core.MistralClient import MistralClient
 from core.OpenAIClient import OpenAIClient
 from docx import Document
 from docx.document import Document as DocumentType
@@ -77,10 +80,10 @@ class Cv:
             {cv_text}
             \"\"\"
             """
-
-        client = OpenAIClient(
-            api_key=self.config["CHATGPT"]["api_key"], model=self.config["CHATGPT"]["model"]
-        )
+        if (self.config["LLM"]["provider"] == "CHATGPT"):
+            client = OpenAIClient(config=self.config)
+        if (self.config["LLM"]["provider"] == "MISTRAL"):
+            client = MistralClient(config=self.config)
         return client.extract(prompt, format)
 
     # =========================

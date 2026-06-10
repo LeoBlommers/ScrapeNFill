@@ -1,4 +1,5 @@
 import json
+from configparser import ConfigParser
 from typing import Any, cast
 
 from core.AIClient import AIClient
@@ -7,9 +8,9 @@ from openai.types.shared_params.response_format_json_schema import ResponseForma
 
 
 class OpenAIClient(AIClient):
-    def __init__(self, api_key: str, model: str):
-        self.client = OpenAI(api_key=api_key)
-        self.model = model
+    def __init__(self, config: ConfigParser):
+        self.client = OpenAI(api_key=config["CHATGPT"]["api_key"])
+        self.model = config["CHATGPT"]["model"]
 
     def extract(self, prompt: str, schema: dict[str, Any]) -> dict[str, Any]:
 

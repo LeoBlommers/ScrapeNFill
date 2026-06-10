@@ -1,4 +1,5 @@
 import json
+from configparser import ConfigParser
 from typing import Any, cast
 
 from core.AIClient import AIClient
@@ -6,9 +7,9 @@ from mistralai.client import Mistral
 
 
 class MistralClient(AIClient):
-    def __init__(self, api_key: str, model: str):
-        self.client = Mistral(api_key=api_key)
-        self.model = model
+    def __init__(self, config: ConfigParser):
+        self.client = Mistral(api_key=config["MISTRAL"]["api_key"])
+        self.model = config["MISTRAL"]["model"]
 
     def extract(self, prompt: str, schema: dict[str, Any]) -> dict[str, Any]:
 
