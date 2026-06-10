@@ -80,8 +80,11 @@ class Cv:
             """
         if self.config["LLM"]["provider"] == "CHATGPT":
             client = OpenAIClient(config=self.config)
-        if self.config["LLM"]["provider"] == "MISTRAL":
+        elif self.config["LLM"]["provider"] == "MISTRAL":
             client = MistralClient(config=self.config)
+        else:
+            raise Exception("Invalid LLM provider")
+
         return client.extract(prompt, format)
 
     # =========================
