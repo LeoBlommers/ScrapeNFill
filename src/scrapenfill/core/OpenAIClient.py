@@ -11,7 +11,7 @@ class OpenAIClient(AIClient):
         self.client = OpenAI(api_key=api_key)
         self.model = model
 
-    def extract(self, prompt: str, format: dict[str, Any]) -> dict[str, Any]:
+    def extract(self, prompt: str, schema: dict[str, Any]) -> dict[str, Any]:
 
         response = self.client.chat.completions.create(
             model=self.model,
@@ -23,7 +23,7 @@ class OpenAIClient(AIClient):
                     "type": "json_schema",
                     "json_schema": {
                         "name": "result",
-                        "schema": format,
+                        "schema": schema,
                         "strict": True,
                     },
                 },
