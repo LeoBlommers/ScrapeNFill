@@ -6,23 +6,21 @@ from configparser import ConfigParser
 from typing import Any, cast
 
 from core.AIClient import AIClient
-from openai import OpenAI
-from openai.types.shared_params.response_format_json_schema import ResponseFormatJSONSchema
+from mistralai.client import Mistral
 
 
-class OpenAIClient(AIClient):
+class MistralClient(AIClient):
     def __init__(self, config: ConfigParser):
-        self.client = OpenAI(api_key=config["CHATGPT"]["api_key"])
-        self.model = config["CHATGPT"]["model"]
+        self.client = Mistral(api_key=config["MISTRAL"]["api_key"])
+        self.model = config["MISTRAL"]["model"]
 
     def extract(self, prompt: str, schema: dict[str, Any]) -> dict[str, Any]:
 
-        response = self.client.chat.completions.create(
-            model=self.model,
+        response = self.client.chat.complete(
+            model="mistral-large-latest",
             messages=[{"role": "user", "content": prompt}],
-            temperature=0.2,
             response_format=cast(
-                ResponseFormatJSONSchema,
+                Any,
                 {
                     "type": "json_schema",
                     "json_schema": {
@@ -34,7 +32,8 @@ class OpenAIClient(AIClient):
             ),
         )
 
-        if not response.choices or not response.choices[0].message.content:
+        if not response.choices[0].message or not response.choices[0].message.content:
             raise Exception("No response from OpenAI")
+        assert isinstance(response.choices[0].message.content, str)
         content: str = response.choices[0].message.content
         return json.loads(content)

@@ -7,6 +7,7 @@ from configparser import ConfigParser
 from typing import cast
 
 import pdfplumber
+from core.MistralClient import MistralClient
 from core.OpenAIClient import OpenAIClient
 from docx import Document
 from docx.document import Document as DocumentType
@@ -80,10 +81,13 @@ class Cv:
             {cv_text}
             \"\"\"
             """
+        if self.config["LLM"]["provider"] == "CHATGPT":
+            client = OpenAIClient(config=self.config)
+        elif self.config["LLM"]["provider"] == "MISTRAL":
+            client = MistralClient(config=self.config)
+        else:
+            raise Exception("Invalid LLM provider")
 
-        client = OpenAIClient(
-            api_key=self.config["CHATGPT"]["api_key"], model=self.config["CHATGPT"]["model"]
-        )
         return client.extract(prompt, format)
 
     # =========================
