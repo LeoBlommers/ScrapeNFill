@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Leo
+# Licensed under the ScrapeNFill Community License
+
 import json
 from collections.abc import Iterator
 from configparser import ConfigParser

@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Leo
+# Licensed under the ScrapeNFill Community License
+
 import threading
 import tkinter as tk
 from pathlib import Path
