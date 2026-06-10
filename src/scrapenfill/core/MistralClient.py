@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Leo
+# Licensed under the ScrapeNFill Community License
+
 import json
 from configparser import ConfigParser
 from typing import Any, cast
