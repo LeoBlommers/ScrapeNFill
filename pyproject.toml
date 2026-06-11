@@ -3,10 +3,12 @@ name = "format-cvs"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.12"
 dependencies = [
     "docxtpl>=0.20.2",
-    "fastapi>=0.128.8",
+    "google-genai>=2.8.0",
+    "mistralai-workflows>=3.7.0",
+    "ollama>=0.6.2",
     "openai>=2.32.0",
     "pdfplumber>=0.11.8",
     "pyinstaller>=6.20.0",
