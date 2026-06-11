@@ -16,6 +16,10 @@ api_key = <add chatgpt api key here>
 model = gpt-5.4-mini
 api_key = <add mistral api key here>
 
+[GEMINI]
+model = gemini-3.5-flash
+api_key = <add gemini api key here>
+
 [OLLAMA]
 model = qwen3:32b
-url = <add mistral api key here>
+url = <add ollama url here>

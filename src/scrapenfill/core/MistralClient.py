@@ -21,14 +21,7 @@ class MistralClient(AIClient):
             messages=[{"role": "user", "content": prompt}],
             response_format=cast(
                 Any,
-                {
-                    "type": "json_schema",
-                    "json_schema": {
-                        "name": "result",
-                        "schema": schema,
-                        "strict": True,
-                    },
-                },
+                schema,
             ),
         )
 

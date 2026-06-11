@@ -7,6 +7,7 @@ from configparser import ConfigParser
 from typing import cast
 
 import pdfplumber
+from core.GeminiClient import GeminiClient
 from core.MistralClient import MistralClient
 from core.OllamaClient import OllamaClient
 from core.OpenAIClient import OpenAIClient
@@ -86,6 +87,8 @@ class Cv:
             client = OpenAIClient(config=self.config)
         elif self.config["LLM"]["provider"] == "MISTRAL":
             client = MistralClient(config=self.config)
+        elif self.config["LLM"]["provider"] == "GEMINI":
+            client = GeminiClient(config=self.config)
         elif self.config["LLM"]["provider"] == "OLLAMA":
             client = OllamaClient(config=self.config)
         else:
