@@ -3,7 +3,7 @@
 
 from pathlib import Path
 
-from core.cv import Cv
+from core.process import Process
 
 
 def run_process(input_dir, output_dir, template, cv):
@@ -38,6 +38,6 @@ def run(config, args):
     input_dir = args.input if args.input else config["DIRECTORIES"]["input"]
     output_dir = args.output if args.output else config["DIRECTORIES"]["output"]
     template = args.template if args.template else config["TEMPLATE"]["template"]
-    cv = Cv(config)
+    cv = Process(config)
 
     run_process(input_dir, output_dir, template, cv)
