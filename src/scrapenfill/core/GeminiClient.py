@@ -5,8 +5,9 @@ from configparser import ConfigParser
 from typing import Any
 
 import google.genai as genai
-from .AIClient import AIClient
 from google.genai import types
+
+from .AIClient import AIClient
 
 
 class GeminiClient(AIClient):

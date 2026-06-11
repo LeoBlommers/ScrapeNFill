@@ -7,15 +7,16 @@ from configparser import ConfigParser
 from typing import cast
 
 import pdfplumber
-from .GeminiClient import GeminiClient
-from .MistralClient import MistralClient
-from .OllamaClient import OllamaClient
-from .OpenAIClient import OpenAIClient
 from docx import Document
 from docx.document import Document as DocumentType
 from docx.table import Table
 from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate
+
+from .GeminiClient import GeminiClient
+from .MistralClient import MistralClient
+from .OllamaClient import OllamaClient
+from .OpenAIClient import OpenAIClient
 
 
 class Process:

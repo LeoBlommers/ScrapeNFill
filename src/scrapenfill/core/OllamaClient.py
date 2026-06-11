@@ -5,8 +5,9 @@ import json
 from configparser import ConfigParser
 from typing import Any
 
-from .AIClient import AIClient
 from ollama import chat
+
+from .AIClient import AIClient
 
 
 class OllamaClient(AIClient):
