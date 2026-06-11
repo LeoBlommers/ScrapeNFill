@@ -7,10 +7,10 @@ from configparser import ConfigParser
 from typing import cast
 
 import pdfplumber
-from core.GeminiClient import GeminiClient
-from core.MistralClient import MistralClient
-from core.OllamaClient import OllamaClient
-from core.OpenAIClient import OpenAIClient
+from .GeminiClient import GeminiClient
+from .MistralClient import MistralClient
+from .OllamaClient import OllamaClient
+from .OpenAIClient import OpenAIClient
 from docx import Document
 from docx.document import Document as DocumentType
 from docx.table import Table

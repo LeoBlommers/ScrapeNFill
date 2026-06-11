@@ -5,7 +5,7 @@ import json
 from configparser import ConfigParser
 from typing import Any, cast
 
-from core.AIClient import AIClient
+from .AIClient import AIClient
 from mistralai.client import Mistral
 
 

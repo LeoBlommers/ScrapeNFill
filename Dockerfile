@@ -1,18 +1,14 @@
-FROM mcr.microsoft.com/windows/nanoserver:ltsc2025
+FROM python:3.14-slim
 
-# uv installeren
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+# Install uv.
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
+# Copy the application into the container.
+COPY . /app
+
+# Install the application dependencies.
 WORKDIR /app
+RUN uv sync --frozen --no-cache
 
-# Eerst dependency files kopiëren voor caching
-COPY pyproject.toml uv.lock ./
-
-# dependencies installeren
-RUN uv sync
-
-# rest van project
-COPY . .
-
-# build
-RUN uv run pyinstaller --onefile src/scrapenfill/app.py
+# Run the application.
+CMD ["/app/.venv/bin/fastapi", "run", "app/main.py", "--port", "80", "--host", "0.0.0.0"]

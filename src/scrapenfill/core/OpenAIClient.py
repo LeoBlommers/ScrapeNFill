@@ -5,7 +5,7 @@ import json
 from configparser import ConfigParser
 from typing import Any, cast
 
-from core.AIClient import AIClient
+from .AIClient import AIClient
 from openai import OpenAI
 from openai.types.shared_params.response_format_json_schema import ResponseFormatJSONSchema
 
