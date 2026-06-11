@@ -1,21 +1,26 @@
+# Copyright (c) 2026 Leo
+# Licensed under the ScrapeNFill Community License
+
 import json
 from collections.abc import Iterator
 from configparser import ConfigParser
 from typing import cast
 
 import pdfplumber
+from core.GeminiClient import GeminiClient
+from core.MistralClient import MistralClient
+from core.OllamaClient import OllamaClient
+from core.OpenAIClient import OpenAIClient
 from docx import Document
 from docx.document import Document as DocumentType
 from docx.table import Table
 from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate
-from openai import OpenAI
 
 
-class Cv:
+class Process:
     def __init__(self, config: ConfigParser):
         self.config = config
-        self.client = OpenAI(api_key=config["CHATGPT"]["api_key"])
 
     # =========================
     # TEXT EXTRACTION
@@ -66,7 +71,7 @@ class Cv:
     # =========================
     def cv_to_json(self, cv_text):
         with open("core/model") as file:
-            model = json.load(file)
+            format = json.load(file)
         with open("core/prompt") as file:
             prompt = file.read()
 
@@ -79,16 +84,19 @@ class Cv:
             \"\"\"
             """
 
-        resp = self.client.chat.completions.create(
-            model=self.config["CHATGPT"]["model"],
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.2,
-            response_format=model,
-        )
-        if not resp.choices or not resp.choices[0].message.content:
-            raise Exception("No response from OpenAI")
-        content: str = resp.choices[0].message.content
-        return json.loads(content)
+        match self.config["LLM"]["provider"]:
+            case "CHATGPT":
+                client = OpenAIClient(config=self.config)
+            case "MISTRAL":
+                client = MistralClient(config=self.config)
+            case "GEMINI":
+                client = GeminiClient(config=self.config)
+            case "OLLAMA":
+                client = OllamaClient(config=self.config)
+            case _:
+                raise Exception("Invalid LLM provider")
+
+        return client.extract(prompt, format)
 
     # =========================
     # OUTPUT

@@ -5,6 +5,21 @@ output = <add output directory here>
 [TEMPLATE]
 template = <add path to template here>
 
+[LLM]
+provider = CHATGPT
+
 [CHATGPT]
 model = gpt-5.4-mini
 api_key = <add chatgpt api key here>
+
+[MISTRAL]
+model = gpt-5.4-mini
+api_key = <add mistral api key here>
+
+[GEMINI]
+model = gemini-3.5-flash
+api_key = <add gemini api key here>
+
+[OLLAMA]
+model = qwen3:32b
+url = <add ollama url here>
