@@ -6,14 +6,14 @@ import tkinter as tk
 from pathlib import Path
 from tkinter import filedialog, scrolledtext, ttk
 
-from core.cv import Cv
+from core.process import Process
 
 
 class App:
     def __init__(self, root, config):
 
         self.config = config
-        self.cv = Cv(config)
+        self.cv = Process(config)
 
         self.root = root
         self.root.title("Mijn Process GUI")

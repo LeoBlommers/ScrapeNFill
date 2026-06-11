@@ -18,7 +18,7 @@ from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate
 
 
-class Cv:
+class Process:
     def __init__(self, config: ConfigParser):
         self.config = config
 
@@ -83,16 +83,18 @@ class Cv:
             {cv_text}
             \"\"\"
             """
-        if self.config["LLM"]["provider"] == "CHATGPT":
-            client = OpenAIClient(config=self.config)
-        elif self.config["LLM"]["provider"] == "MISTRAL":
-            client = MistralClient(config=self.config)
-        elif self.config["LLM"]["provider"] == "GEMINI":
-            client = GeminiClient(config=self.config)
-        elif self.config["LLM"]["provider"] == "OLLAMA":
-            client = OllamaClient(config=self.config)
-        else:
-            raise Exception("Invalid LLM provider")
+
+        match self.config["LLM"]["provider"]:
+            case "CHATGPT":
+                client = OpenAIClient(config=self.config)
+            case "MISTRAL":
+                client = MistralClient(config=self.config)
+            case "GEMINI":
+                client = GeminiClient(config=self.config)
+            case "OLLAMA":
+                client = OllamaClient(config=self.config)
+            case _:
+                raise Exception("Invalid LLM provider")
 
         return client.extract(prompt, format)
 
