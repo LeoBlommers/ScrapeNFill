@@ -4,8 +4,8 @@ import json
 from configparser import ConfigParser
 from typing import Any
 
-from core.AIClient import AIClient
 import google.genai as genai
+from core.AIClient import AIClient
 from google.genai import types
 
 
