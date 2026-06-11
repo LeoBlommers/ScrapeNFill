@@ -6,7 +6,7 @@ import tkinter as tk
 from pathlib import Path
 from tkinter import filedialog, scrolledtext, ttk
 
-from core.process import Process
+from scrapenfill.core.process import Process
 
 
 class App:
@@ -76,7 +76,7 @@ class App:
     def on_closing(self):
         self.config["DIRECTORIES"]["input"] = self.input_dir.get()
         self.config["DIRECTORIES"]["output"] = self.output_dir.get()
-        with open("../config.ini", "w") as configfile:
+        with open("../core/config.ini", "w") as configfile:
             self.config.write(configfile)
         self.root.destroy()
 

@@ -3,7 +3,7 @@
 
 from pathlib import Path
 
-from core.process import Process
+from scrapenfill.core.process import Process
 
 
 def run_process(input_dir, output_dir, template, cv):

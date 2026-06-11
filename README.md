@@ -88,7 +88,6 @@ uv run pyinstaller \
 Build via Docker
 docker build -t formatcvs-win .
 
-docker run --rm -v "$(pwd):/formatcvs" formatcvs-win
 
 # Ollama
 
@@ -97,3 +96,6 @@ Install ollama from https://ollama.com/download/mac?utm_source=chatgpt.com
 Start ollama server: ollama serve
 ollama ps
 ollama run qwen3:32b
+
+Start fastapi server:
+uv run fastapi dev src/scrapenfill/rest/app.py

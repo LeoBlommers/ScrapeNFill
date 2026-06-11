@@ -10,4 +10,4 @@ wheels/
 .venv
 
 src/*.docx
-src/scrapenfill/config.ini
+src/scrapenfill/core/config.ini
