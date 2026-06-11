@@ -76,7 +76,7 @@ class App:
     def on_closing(self):
         self.config["DIRECTORIES"]["input"] = self.input_dir.get()
         self.config["DIRECTORIES"]["output"] = self.output_dir.get()
-        with open("../config.ini", "w") as configfile:
+        with open("../core/config.ini", "w") as configfile:
             self.config.write(configfile)
         self.root.destroy()
 

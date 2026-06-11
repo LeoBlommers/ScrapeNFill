@@ -12,7 +12,7 @@ def scrap_n_fill():
     args = parser.parse_args()
 
     config: ConfigParser = ConfigParser()
-    config.read("config.ini")
+    config.read("scrapenfill/core/config.ini")
 
     if args.mode == "desktop":
         from desktop.main import run
