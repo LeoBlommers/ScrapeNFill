@@ -27,7 +27,7 @@ class MistralClient(AIClient):
         )
 
         if not response.choices[0].message or not response.choices[0].message.content:
-            raise Exception("No response from OpenAI")
+            raise Exception("No response from Mistral")
         assert isinstance(response.choices[0].message.content, str)
         content: str = response.choices[0].message.content
         return json.loads(content)

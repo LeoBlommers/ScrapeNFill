@@ -27,5 +27,5 @@ class GeminiClient(AIClient):
         )
 
         if not response.text:
-            raise Exception("No response from OpenAI")
+            raise Exception("No response from Gemini")
         return json.loads(response.text)

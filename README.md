@@ -22,19 +22,21 @@ uv sync
 
 
 ## Config
-| Section     | Property | Description       | Example                                               |
-|-------------|----------|-------------------|-------------------------------------------------------|
-| DIRECTORIES | INPUT    | Input directory   | /path/to/input                                        |
-| DIRECTORIES | OUTPUT   | Output directory  | /path/to/output                                       |
-| TEMPLATE    | template | Template file     | /path/to/template                                     |
-| LLM         | provider | LLM provider      | supported providers: CHATGPT, MISTRAL, GEMINI, OLLAMA |
-| CHATGPT     | model    | LLM model         | gpt-5.4-mini                                          |
-| CHATGPT     | api_key  | API key           |                                                       |
-| MISTRAL     | model    | LLM model         | mistral-small                                         |
-| MISTRAL     | api_key  | API key           |                                                       |
-| GEMINI      | model    | LLM model         | gemini-pro                                            |
-| GEMINI      | api_key  | API key           |                                                       |
-| OLLAMA      | model    | LLM model         | qwen3:32b                                             |
+| Section     | Property | Description      | Example                                                       |
+|-------------|----------|------------------|---------------------------------------------------------------|
+| DIRECTORIES | INPUT    | Input directory  | /path/to/input                                                |
+| DIRECTORIES | OUTPUT   | Output directory | /path/to/output                                               |
+| TEMPLATE    | template | Template file    | /path/to/template                                             |
+| LLM         | provider | LLM provider     | supported providers: CHATGPT, MISTRAL, GEMINI, OLLAMA, CLAUDE |
+| CHATGPT     | model    | LLM model        | gpt-5.4-mini                                                  |
+| CHATGPT     | api_key  | API key          |                                                               |
+| MISTRAL     | model    | LLM model        | mistral-small                                                 |
+| MISTRAL     | api_key  | API key          |                                                               |
+| GEMINI      | model    | LLM model        | gemini-pro                                                    |
+| GEMINI      | api_key  | API key          |                                                               |
+| OLLAMA      | model    | LLM model        | qwen3:32b                                                     |
+| CLAUDE      | model    | LLM model        | claude-sonnet-4-20250514                                      |
+| CLAUDE      | api_key  | API key          |                                                               |
 
 ## Define a model
 
