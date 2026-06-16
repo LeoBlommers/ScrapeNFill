@@ -22,7 +22,7 @@ class OllamaClient(AIClient):
         )
 
         if not response.message or not response.message.content:
-            raise Exception("No response from OpenAI")
+            raise Exception("No response from Ollama")
         assert isinstance(response.message.content, str)
         content: str = response.message.content
         return json.loads(content)
