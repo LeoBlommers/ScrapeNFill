@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Leo
+# Licensed under the ScrapeNFill Community License
+
 import shutil
 import tempfile
 from configparser import ConfigParser
@@ -7,7 +10,7 @@ from typing import Annotated
 from fastapi import BackgroundTasks, FastAPI, File, UploadFile
 from starlette.responses import FileResponse
 
-from scrapenfill.core.process import Process
+from ..core.process import Process
 
 app = FastAPI()
 

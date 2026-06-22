@@ -37,6 +37,7 @@ uv sync
 | OLLAMA      | model    | LLM model        | qwen3:32b                                                     |
 | CLAUDE      | model    | LLM model        | claude-sonnet-4-20250514                                      |
 | CLAUDE      | api_key  | API key          |                                                               |
+| PROCESSING  | max_concurrent | Max parallel LLM calls | 5                                                      |
 
 ## Define a model
 
@@ -81,11 +82,21 @@ uv run ruff format .
 # type check your code
 uv run pyright
 
+# Run
+
+Run CLI (from src/):
+python -m scrapenfill.scrapenfill --mode cli
+
+Run desktop GUI (from src/):
+python -m scrapenfill.scrapenfill --mode desktop
+
+Start REST API (from src/):
+uv run fastapi dev scrapenfill.rest.app
+
 # Build executable
-Build local executable
 uv run pyinstaller \
   --onefile \
-  src/formatcvs/formatcv.py
+  src/scrapenfill/scrapenfill.py
 
 Build via Docker
 docker build -t formatcvs-win .
@@ -98,6 +109,3 @@ Install ollama from https://ollama.com/download/mac?utm_source=chatgpt.com
 Start ollama server: ollama serve
 ollama ps
 ollama run qwen3:32b
-
-Start fastapi server:
-uv run fastapi dev src/scrapenfill/rest/app.py

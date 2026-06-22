@@ -5,7 +5,7 @@ import json
 from configparser import ConfigParser
 from typing import Any
 
-from ollama import chat
+import ollama
 
 from .AIClient import AIClient
 
@@ -13,9 +13,10 @@ from .AIClient import AIClient
 class OllamaClient(AIClient):
     def __init__(self, config: ConfigParser):
         self.model = config["OLLAMA"]["model"]
+        self.client = ollama.AsyncClient()
 
-    def extract(self, prompt: str, schema: dict[str, Any]) -> dict[str, Any]:
-        response = chat(
+    async def extract(self, prompt: str, schema: dict[str, Any]) -> dict[str, Any]:
+        response = await self.client.chat(
             model=self.model,
             messages=[{"role": "user", "content": prompt}],
             format=schema["json_schema"]["schema"],

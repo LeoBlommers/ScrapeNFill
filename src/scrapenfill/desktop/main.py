@@ -1,12 +1,13 @@
 # Copyright (c) 2026 Leo
 # Licensed under the ScrapeNFill Community License
 
+import asyncio
 import threading
 import tkinter as tk
 from pathlib import Path
 from tkinter import filedialog, scrolledtext, ttk
 
-from scrapenfill.core.process import Process
+from core.process import Process
 
 
 class App:
@@ -116,27 +117,46 @@ class App:
 
     def run_process(self, input_dir, output_dir, template):
         try:
-            Path(output_dir).mkdir(exist_ok=True)
+            max_concurrent = int(self.config.get("PROCESSING", "max_concurrent", fallback="5"))
 
-            for file in Path(input_dir).iterdir():
-                if not file.is_file():
-                    continue
+            async def process_all():
+                Path(output_dir).mkdir(exist_ok=True)
 
-                self.log(f"➡️ Processing {file.name}")
+                files = [f for f in Path(input_dir).iterdir() if f.is_file()]
+                if not files:
+                    self.log("⚠️ Geen bestanden gevonden")
+                    return
 
-                cv_text = self.cv.extract_text(file)
-                if not cv_text.strip():
-                    self.log("⚠️ Geen tekst gevonden")
-                    continue
+                sem = asyncio.Semaphore(max_concurrent)
 
-                data = self.cv.cv_to_json(cv_text)
-                if not data:
-                    continue
+                async def process_one(file):
+                    async with sem:
+                        self.log(f"➡️ Processing {file.name}")
 
-                output_path = Path(output_dir) / f"{file.stem}.docx"
-                self.cv.save_docx(data, template, output_path)
+                        cv_text = self.cv.extract_text(file)
+                        if not cv_text.strip():
+                            self.log(f"⚠️ Geen tekst in {file.name}")
+                            return
 
-                self.log(f"✅ Saved: {output_path}")
+                        data = await self.cv.cv_to_json(cv_text)
+                        if not data:
+                            self.log(f"⚠️ Geen data geëxtraheerd uit {file.name}")
+                            return
+
+                        output_path = Path(output_dir) / f"{file.stem}.docx"
+                        self.cv.save_docx(data, template, output_path)
+
+                        self.log(f"✅ Saved: {output_path}")
+
+                results = await asyncio.gather(
+                    *(process_one(f) for f in files), return_exceptions=True
+                )
+
+                for r in results:
+                    if isinstance(r, Exception):
+                        self.log(f"FOUT: {r}")
+
+            asyncio.run(process_all())
 
         except Exception as e:
             self.log(f"FOUT: {e}")

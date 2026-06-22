@@ -33,7 +33,7 @@ jobs:
         run: uv build
 
       - name: Create executable
-        run: uv run pyinstaller --onefile src/scrapenfill/scrapenfill.py
+        run: uv run pyinstaller --onefile src/scrapenfill/start.py
 
       - name: Create Release
         uses: softprops/action-gh-release@v2

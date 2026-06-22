@@ -1,8 +1,11 @@
+# Copyright (c) 2026 Leo
+# Licensed under the ScrapeNFill Community License
+
 import json
 from configparser import ConfigParser
 from typing import Any
 
-from anthropic import Anthropic
+from anthropic import AsyncAnthropic
 
 from .AIClient import AIClient
 
@@ -10,10 +13,10 @@ from .AIClient import AIClient
 class ClaudeClient(AIClient):
     def __init__(self, config: ConfigParser):
         self.model = config["CLAUDE"]["model"]
-        self.client = Anthropic(api_key=config["CLAUDE"]["api_key"])
+        self.client = AsyncAnthropic(api_key=config["CLAUDE"]["api_key"])
 
-    def extract(self, prompt: str, schema: dict[str, Any]) -> dict[str, Any]:
-        response = self.client.messages.create(
+    async def extract(self, prompt: str, schema: dict[str, Any]) -> dict[str, Any]:
+        response = await self.client.messages.create(
             model=self.model,
             max_tokens=1000,
             tools=[

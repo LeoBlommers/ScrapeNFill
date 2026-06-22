@@ -13,6 +13,7 @@ from docx.table import Table
 from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate
 
+from .ClaudeClient import ClaudeClient
 from .GeminiClient import GeminiClient
 from .MistralClient import MistralClient
 from .OllamaClient import OllamaClient
@@ -94,6 +95,8 @@ class Process:
                 client = GeminiClient(config=self.config)
             case "OLLAMA":
                 client = OllamaClient(config=self.config)
+            case "CLAUDE":
+                client = ClaudeClient(config=self.config)
             case _:
                 raise Exception("Invalid LLM provider")
 

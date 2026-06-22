@@ -15,15 +15,11 @@ class MistralClient(AIClient):
         self.client = Mistral(api_key=config["MISTRAL"]["api_key"])
         self.model = config["MISTRAL"]["model"]
 
-    def extract(self, prompt: str, schema: dict[str, Any]) -> dict[str, Any]:
-
-        response = self.client.chat.complete(
-            model="mistral-large-latest",
+    async def extract(self, prompt: str, schema: dict[str, Any]) -> dict[str, Any]:
+        response = await self.client.chat.complete_async(
+            model=self.model,
             messages=[{"role": "user", "content": prompt}],
-            response_format=cast(
-                Any,
-                schema,
-            ),
+            response_format=cast(Any, schema),
         )
 
         if not response.choices[0].message or not response.choices[0].message.content:
