@@ -15,8 +15,8 @@ class GeminiClient(AIClient):
         self.model = config["GEMINI"]["model"]
         self.client = genai.Client(api_key=config["GEMINI"]["api_key"])
 
-    def extract(self, prompt: str, schema: dict[str, Any]) -> dict[str, Any]:
-        response = self.client.models.generate_content(
+    async def extract(self, prompt: str, schema: dict[str, Any]) -> dict[str, Any]:
+        response = await self.client.aio.models.generate_content(
             model=self.model,
             contents=prompt,
             config=types.GenerateContentConfig(

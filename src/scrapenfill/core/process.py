@@ -13,6 +13,7 @@ from docx.table import Table
 from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate
 
+from .ClaudeClient import ClaudeClient
 from .GeminiClient import GeminiClient
 from .MistralClient import MistralClient
 from .OllamaClient import OllamaClient
@@ -70,7 +71,7 @@ class Process:
     # =========================
     # STEP 1: CV → JSON
     # =========================
-    def cv_to_json(self, cv_text):
+    async def cv_to_json(self, input_text):
         with open("core/model") as file:
             format = json.load(file)
         with open("core/prompt") as file:
@@ -79,9 +80,9 @@ class Process:
         prompt = f"""
             {prompt}
             
-            CV:
+            Input:
 ƒ            \"\"\"
-            {cv_text}
+            {input_text}
             \"\"\"
             """
 
@@ -94,10 +95,12 @@ class Process:
                 client = GeminiClient(config=self.config)
             case "OLLAMA":
                 client = OllamaClient(config=self.config)
+            case "CLAUDE":
+                client = ClaudeClient(config=self.config)
             case _:
                 raise Exception("Invalid LLM provider")
 
-        return client.extract(prompt, format)
+        return await client.extract(prompt, format)
 
     # =========================
     # OUTPUT

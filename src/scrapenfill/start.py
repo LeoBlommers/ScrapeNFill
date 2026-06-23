@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Leo
+# Licensed under the ScrapeNFill Community License
+
 import argparse
 from configparser import ConfigParser
 
@@ -12,12 +15,12 @@ def scrap_n_fill():
     args = parser.parse_args()
 
     config: ConfigParser = ConfigParser()
-    config.read("scrapenfill/core/config.ini")
+    config.read("core/config.ini")
 
     if args.mode == "desktop":
-        from desktop.main import run
+        from scrapenfill.desktop.main import run
     elif args.mode == "cli":
-        from cli.main import run
+        from scrapenfill.cli.main import run
     else:
         raise Exception("Invalid mode")
 

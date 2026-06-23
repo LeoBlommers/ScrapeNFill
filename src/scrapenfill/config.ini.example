@@ -23,3 +23,6 @@ api_key = <add gemini api key here>
 [OLLAMA]
 model = qwen3:32b
 url = <add ollama url here>
+
+[PROCESSING]
+max_concurrent = 5
