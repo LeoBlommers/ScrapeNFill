@@ -26,6 +26,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "pydantic-settings>=2.14.2",
     "pyright>=v1.1.410",
     "pytest>=8.4.2",
     "pytest-asyncio>=0.26",
