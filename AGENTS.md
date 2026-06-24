@@ -40,5 +40,5 @@ src/scrapenfill/           # Python package
 - `core/config.ini` is gitignored (contains API keys). Copy from `config.ini.example`.
 - `.spec` files under repo root reference old `src/formatcvs/` paths — they are stale. Use the inline `pyinstaller` command above.
 - Dockerfile CMD is stale (references `/app/main.py`). Real REST entrypoint: `src/scrapenfill/rest/app.py`.
-- Only 1 test exists (`tests/test_main.py`, placeholder).
+- Tests in `tests/`: `test_process.py` (Process class), `test_ai_clients.py` (all 5 AI clients), `test_api.py` (FastAPI routing). Run with `uv run pytest`.
 - Git track: CI runs on `main` + `develop` + PRs. Releases on tags `v*` build a Windows `.exe`.
