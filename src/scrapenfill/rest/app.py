@@ -10,7 +10,7 @@ from typing import Annotated
 from fastapi import BackgroundTasks, FastAPI, File, UploadFile
 from starlette.responses import FileResponse
 
-from ..core.process import Process
+from scrapenfill.core.process import Process
 
 app = FastAPI()
 

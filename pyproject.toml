@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "format-cvs"
 version = "0.1.0"
@@ -24,9 +28,16 @@ dependencies = [
 dev = [
     "pyright>=v1.1.410",
     "pytest>=8.4.2",
+    "pytest-asyncio>=0.26",
     "ruff>=0.15.11",
     "ty>=0.0.32",
 ]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.ruff]
 line-length = 100

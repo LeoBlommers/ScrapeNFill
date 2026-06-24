@@ -7,7 +7,7 @@ import tkinter as tk
 from pathlib import Path
 from tkinter import filedialog, scrolledtext, ttk
 
-from core.process import Process
+from scrapenfill.core.process import Process
 
 
 class App:
