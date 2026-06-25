@@ -21,9 +21,9 @@ def scrap_n_fill():
     config.read(str(_PKG_DIR / "core" / "config.ini"))
 
     if args.mode == "desktop":
-        from scrapenfill.desktop.main import run
+        from desktop.main import run
     elif args.mode == "cli":
-        from scrapenfill.cli.main import run
+        from cli.main import run
     else:
         raise Exception("Invalid mode")
 

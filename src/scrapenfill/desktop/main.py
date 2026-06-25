@@ -7,7 +7,7 @@ import tkinter as tk
 from pathlib import Path
 from tkinter import filedialog, scrolledtext, ttk
 
-from scrapenfill.core.process import Process
+from core.process import Process
 
 _CORE_DIR = Path(__file__).parent.parent / "core"
 
