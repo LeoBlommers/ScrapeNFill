@@ -2,10 +2,14 @@
 # Licensed under the ScrapeNFill Community License
 
 import argparse
+import sys
 from configparser import ConfigParser
 from pathlib import Path
 
 _PKG_DIR = Path(__file__).parent.resolve()
+
+if __name__ == "__main__":
+    sys.path.insert(0, str(_PKG_DIR.parent))
 
 
 def scrap_n_fill():
@@ -21,9 +25,9 @@ def scrap_n_fill():
     config.read(str(_PKG_DIR / "core" / "config.ini"))
 
     if args.mode == "desktop":
-        from desktop.main import run
+        from scrapenfill.desktop.main import run
     elif args.mode == "cli":
-        from cli.main import run
+        from scrapenfill.cli.main import run
     else:
         raise Exception("Invalid mode")
 
