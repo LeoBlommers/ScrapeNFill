@@ -20,6 +20,10 @@ api_key = <add mistral api key here>
 model = gemini-3.5-flash
 api_key = <add gemini api key here>
 
+[CLAUDE]
+model = claude-sonnet-4-20250514
+api_key = <add claude api key here>
+
 [OLLAMA]
 model = qwen3:32b
 url = <add ollama url here>

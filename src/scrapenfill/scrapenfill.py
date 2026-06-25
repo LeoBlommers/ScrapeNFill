@@ -3,6 +3,9 @@
 
 import argparse
 from configparser import ConfigParser
+from pathlib import Path
+
+_PKG_DIR = Path(__file__).parent.resolve()
 
 
 def scrap_n_fill():
@@ -15,7 +18,7 @@ def scrap_n_fill():
     args = parser.parse_args()
 
     config: ConfigParser = ConfigParser()
-    config.read("core/config.ini")
+    config.read(str(_PKG_DIR / "core" / "config.ini"))
 
     if args.mode == "desktop":
         from scrapenfill.desktop.main import run

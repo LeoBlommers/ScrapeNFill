@@ -9,6 +9,8 @@ from tkinter import filedialog, scrolledtext, ttk
 
 from scrapenfill.core.process import Process
 
+_CORE_DIR = Path(__file__).parent.parent / "core"
+
 
 class App:
     def __init__(self, root, config):
@@ -77,7 +79,7 @@ class App:
     def on_closing(self):
         self.config["DIRECTORIES"]["input"] = self.input_dir.get()
         self.config["DIRECTORIES"]["output"] = self.output_dir.get()
-        with open("../core/config.ini", "w") as configfile:
+        with open(_CORE_DIR / "config.ini", "w") as configfile:
             self.config.write(configfile)
         self.root.destroy()
 
@@ -106,10 +108,8 @@ class App:
             self.log("ERROR: Selecteer input en output directory")
             return
 
-        # Disable knop tijdens run
         self.start_button.config(state="disabled")
 
-        # Run process in aparte thread zodat GUI responsive blijft
         thread = threading.Thread(
             target=self.run_process, args=(input_dir, output_dir, template), daemon=True
         )
@@ -119,48 +119,11 @@ class App:
         try:
             max_concurrent = int(self.config.get("PROCESSING", "max_concurrent", fallback="5"))
 
-            async def process_all():
-                Path(output_dir).mkdir(exist_ok=True)
-
-                files = [f for f in Path(input_dir).iterdir() if f.is_file()]
-                if not files:
-                    self.log("⚠️ Geen bestanden gevonden")
-                    return
-
-                sem = asyncio.Semaphore(max_concurrent)
-
-                async def process_one(file):
-                    async with sem:
-                        self.log(f"➡️ Processing {file.name}")
-
-                        cv_text = self.cv.extract_text(file)
-                        if not cv_text.strip():
-                            self.log(f"⚠️ Geen tekst in {file.name}")
-                            return
-
-                        data = await self.cv.cv_to_json(cv_text)
-                        if not data:
-                            self.log(f"⚠️ Geen data geëxtraheerd uit {file.name}")
-                            return
-
-                        output_path = Path(output_dir) / f"{file.stem}.docx"
-                        self.cv.save_docx(data, template, output_path)
-
-                        self.log(f"✅ Saved: {output_path}")
-
-                results = await asyncio.gather(
-                    *(process_one(f) for f in files), return_exceptions=True
-                )
-
-                for r in results:
-                    if isinstance(r, Exception):
-                        self.log(f"FOUT: {r}")
-
-            asyncio.run(process_all())
-
+            asyncio.run(
+                self.cv.process_all(input_dir, output_dir, template, max_concurrent, log=self.log)
+            )
         except Exception as e:
             self.log(f"FOUT: {e}")
-
         finally:
             self.start_button.config(state="normal")
 
