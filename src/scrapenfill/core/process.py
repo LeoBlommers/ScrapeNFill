@@ -1,9 +1,11 @@
 # Copyright (c) 2026 Leo
 # Licensed under the ScrapeNFill Community License
 
+import asyncio
 import json
 from collections.abc import Iterator
 from configparser import ConfigParser
+from pathlib import Path
 from typing import cast
 
 import pdfplumber
@@ -18,6 +20,8 @@ from .GeminiClient import GeminiClient
 from .MistralClient import MistralClient
 from .OllamaClient import OllamaClient
 from .OpenAIClient import OpenAIClient
+
+_PKG_DIR = Path(__file__).parent.resolve()
 
 
 class Process:
@@ -72,16 +76,16 @@ class Process:
     # STEP 1: CV → JSON
     # =========================
     async def cv_to_json(self, input_text):
-        with open("core/model") as file:
+        with open(_PKG_DIR / "model") as file:
             format = json.load(file)
-        with open("core/prompt") as file:
+        with open(_PKG_DIR / "prompt") as file:
             prompt = file.read()
 
         prompt = f"""
             {prompt}
             
             Input:
-ƒ            \"\"\"
+            \"\"\"
             {input_text}
             \"\"\"
             """
@@ -101,6 +105,46 @@ class Process:
                 raise Exception("Invalid LLM provider")
 
         return await client.extract(prompt, format)
+
+    # =========================
+    # BATCH PROCESSING
+    # =========================
+    async def process_all(self, input_dir, output_dir, template, max_concurrent=5, log=None):
+        log = log or (lambda msg: None)
+
+        Path(output_dir).mkdir(exist_ok=True)
+
+        files = [f for f in Path(input_dir).iterdir() if f.is_file()]
+        if not files:
+            log("⚠️ Geen bestanden gevonden")
+            return
+
+        sem = asyncio.Semaphore(max_concurrent)
+
+        async def process_one(file):
+            async with sem:
+                log(f"➡️ Processing {file.name}")
+
+                cv_text = self.extract_text(file)
+                if not cv_text.strip():
+                    log(f"⚠️ Geen tekst in {file.name}")
+                    return
+
+                data = await self.cv_to_json(cv_text)
+                if not data:
+                    log(f"⚠️ Geen data geëxtraheerd uit {file.name}")
+                    return
+
+                output_path = Path(output_dir) / f"{file.stem}.docx"
+                self.save_docx(data, template, output_path)
+
+                log(f"✅ Saved: {output_path}")
+
+        results = await asyncio.gather(*(process_one(f) for f in files), return_exceptions=True)
+
+        for r in results:
+            if isinstance(r, Exception):
+                log(f"FOUT: {r}")
 
     # =========================
     # OUTPUT

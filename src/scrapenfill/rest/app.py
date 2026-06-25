@@ -12,6 +12,8 @@ from starlette.responses import FileResponse
 
 from scrapenfill.core.process import Process
 
+_CORE_DIR = Path(__file__).parent.parent / "core"
+
 app = FastAPI()
 
 
@@ -21,7 +23,7 @@ async def generate_document(source: Annotated[UploadFile, File()]):
         raise ValueError("No filename supplied")
 
     config: ConfigParser = ConfigParser()
-    config.read("core/config.ini")
+    config.read(str(_CORE_DIR / "config.ini"))
     process = Process(config)
 
     temp_dir = tempfile.mkdtemp()
@@ -34,7 +36,7 @@ async def generate_document(source: Annotated[UploadFile, File()]):
     if not cv_text.strip():
         print("⚠️ Geen tekst gevonden")
 
-    data = process.cv_to_json(cv_text)
+    data = await process.cv_to_json(cv_text)
 
     output_path = Path(temp_dir) / f"{Path(source.filename).stem}.docx"
     process.save_docx(data, config["TEMPLATE"]["template"], output_path)

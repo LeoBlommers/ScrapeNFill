@@ -22,13 +22,14 @@ Ruff: `line-length=100`, `quote-style="double"`, lint `select = ["E4", "E7", "E9
 
 ```
 src/scrapenfill/           # Python package
+├── __main__.py            # python -m scrapenfill entrypoint
 ├── scrapenfill.py         # Entrypoint (--mode cli|desktop)
-├── cli/main.py            # CLI mode
-├── desktop/main.py        # tkinter GUI mode
+├── cli/main.py            # CLI mode (delegates to Process.process_all)
+├── desktop/main.py        # tkinter GUI mode (delegates to Process.process_all)
 ├── rest/app.py            # FastAPI server
 └── core/
-    ├── process.py         # Process class (text extraction, LLM call, docx rendering)
-    ├── AIClient.py        # Abstract base
+    ├── process.py         # Process class (text extraction, LLM call, docx rendering, batch process_all)
+    ├── AIClient.py        # ABC base (async def extract)
     ├── {OpenAI,Claude,Gemini,Mistral,Ollama}Client.py
     ├── model              # JSON schema for CV (NO extension)
     └── prompt             # Dutch LLM system prompt (NO extension)
@@ -36,7 +37,8 @@ src/scrapenfill/           # Python package
 
 ## Quirks & gotchas
 
-- `core/model` and `core/prompt` have **no file extension** — opened as `"core/model"` and `"core/prompt"` in code.
+- `core/model` and `core/prompt` have **no file extension** — opened via `Path(__file__).parent / "model"` derived from package location.
+- `core/config.ini` is gitignored (contains API keys). Copy from `config.ini.example`. Paths to it now use `_PKG_DIR` / `_CORE_DIR` constants.
 - `core/config.ini` is gitignored (contains API keys). Copy from `config.ini.example`.
 - `.spec` files under repo root reference old `src/formatcvs/` paths — they are stale. Use the inline `pyinstaller` command above.
 - Dockerfile CMD is stale (references `/app/main.py`). Real REST entrypoint: `src/scrapenfill/rest/app.py`.
